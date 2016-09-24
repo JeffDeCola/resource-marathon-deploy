@@ -1,9 +1,9 @@
 #!/bin/bash
-# resource-template build.sh
+# resource-marathon-deploy build.sh
 
 set -e -x
 
-# The code is located in /resource-template
+# The code is located in /resource-marathon-deploy
 echo "List whats in the current directory"
 ls -lat 
 echo ""
@@ -11,18 +11,18 @@ echo ""
 # Setup the gopath based on current directory.
 export GOPATH=$PWD
 
-# Now we must move our code from the current directory ./resource-template to $GOPATH/src/github.com/JeffDeCola/resource-template
+# Now we must move our code from the current directory ./resource-marathon-deploy to $GOPATH/src/github.com/JeffDeCola/resource-marathon-deploy
 mkdir -p src/github.com/JeffDeCola/
-cp -R ./resource-template src/github.com/JeffDeCola/.
+cp -R ./resource-marathon-deploy src/github.com/JeffDeCola/.
 
 # All set and everything is in the right place for go
 echo "Gopath is: " $GOPATH
 echo "pwd is: " $PWD
 echo ""
-cd src/github.com/JeffDeCola/resource-template
+cd src/github.com/JeffDeCola/resource-marathon-deploy
 
-# Put the binary resource-template filename in /dist
-go build -o dist/resource-template ./main.go
+# Put the binary resource-marathon-deploy filename in /dist
+go build -o dist/resource-marathon-deploy ./main.go
 
 # cp the Dockerfile into /dist
 cp ci/Dockerfile dist/Dockerfile
