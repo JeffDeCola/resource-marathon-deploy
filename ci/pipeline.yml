@@ -1,48 +1,48 @@
-# resource-template pipeline 
+# resource-marathon-deploy pipeline 
 
 jobs:
 - name: job-unit-tests
   plan:
-  - get: resource-template
+  - get: resource-marathon-deploy
     trigger: true
   - put: resource-slack-alert
     params:
       channel: '#jeff-builds'
-      text: "From resource-template: STARTED job-unit-tests in concourse ci."
+      text: "From resource-marathon-deploy: STARTED job-unit-tests in concourse ci."
   - put: resource-repo-status
-    params: { state: "pending", description: "STARTED job-unit-tests in concourse ci.", commit: "resource-template" }
+    params: { state: "pending", description: "STARTED job-unit-tests in concourse ci.", commit: "resource-marathon-deploy" }
   - task: task-unit-tests
-    file: resource-template/ci/tasks/task-unit-tests.yml
+    file: resource-marathon-deploy/ci/tasks/task-unit-tests.yml
     on_success:
       do:
       - put: resource-slack-alert
         params:
           channel: '#jeff-builds'
-          text: "From resource-template: PASSED job-unit-tests in concourse ci."
+          text: "From resource-marathon-deploy: PASSED job-unit-tests in concourse ci."
       - put: resource-repo-status
-        params: { state: "pending", description: "PASSED job-unit-tests in concourse ci", commit: "resource-template" }
+        params: { state: "pending", description: "PASSED job-unit-tests in concourse ci", commit: "resource-marathon-deploy" }
     on_failure:
       do:
       - put: resource-slack-alert
         params:
           channel: '#jeff-builds'
-          text: "From resource-template: FAILED job-unit-tests in concourse ci."
+          text: "From resource-marathon-deploy: FAILED job-unit-tests in concourse ci."
       - put: resource-repo-status
-        params: { state: "failure", description: "FAILED job-unit-tests in concourse ci.", commit: "resource-template" }
+        params: { state: "failure", description: "FAILED job-unit-tests in concourse ci.", commit: "resource-marathon-deploy" }
 
 - name: job-build
   plan:
-    - get: resource-template
+    - get: resource-marathon-deploy
       trigger: true
       passed: [job-unit-tests]
     - put: resource-slack-alert
       params:
         channel: '#jeff-builds'
-        text: "From resource-template: STARTED job-build in concourse ci."
+        text: "From resource-marathon-deploy: STARTED job-build in concourse ci."
     - put: resource-repo-status
-      params: { state: "pending", description: "STARTED job-build in concourse ci.", commit: "resource-template" }
+      params: { state: "pending", description: "STARTED job-build in concourse ci.", commit: "resource-marathon-deploy" }
     - task: task-build
-      file: resource-template/ci/tasks/task-build.yml
+      file: resource-marathon-deploy/ci/tasks/task-build.yml
     - put: resource-dump-to-dockerhub
       params: { build: "dist"}
       on_success:
@@ -50,17 +50,17 @@ jobs:
         - put: resource-slack-alert
           params:
             channel: '#jeff-builds'
-            text: "From resource-template: PASSED job-build in concourse ci."
+            text: "From resource-marathon-deploy: PASSED job-build in concourse ci."
         - put: resource-repo-status
-          params: { state: "success", description: "PASSED job-build in concourse ci.", commit: "resource-template" }
+          params: { state: "success", description: "PASSED job-build in concourse ci.", commit: "resource-marathon-deploy" }
       on_failure:
         do:
         - put: resource-slack-alert
           params:
             channel: '#jeff-builds'
-            text: "From resource-template: FAILED job-build in concourse ci."
+            text: "From resource-marathon-deploy: FAILED job-build in concourse ci."
         - put: resource-repo-status
-          params: { state: "failure", description: "FAILED job-build in concourse ci.", commit: "resource-template" }
+          params: { state: "failure", description: "FAILED job-build in concourse ci.", commit: "resource-marathon-deploy" }
 
 resource_types:
 - name: slack-notification
@@ -75,15 +75,15 @@ resource_types:
     tag: master
 
 resources:
-- name: resource-template                                                                                                                                                                         
+- name: resource-marathon-deploy                                                                                                                                                                         
   type: git                                                                                                                                                                                       
   source:                                                                                                                                                                                         
     branch: master                                                                                                                                                                                
-    uri: https://github.com/jeffdecola/resource-template 
+    uri: https://github.com/jeffdecola/resource-marathon-deploy 
 - name: resource-dump-to-dockerhub
   type: docker-image
   source:
-    repository: jeffdecola/resource-template
+    repository: jeffdecola/resource-marathon-deploy
     tag: latest
     username: jeffdecola
     password: {{dockerhub_password}}
@@ -94,5 +94,5 @@ resources:
 - name: resource-repo-status 
   type: github-status
   source:
-    repository: jeffdecola/resource-template 
+    repository: jeffdecola/resource-marathon-deploy 
     access_token: {{repo_github_token}}

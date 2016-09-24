@@ -1,5 +1,5 @@
 #!/bin/bash
-# resource-template out
+# resource-marathon-deploy out
 
 # NOTE: YOU CAN REMOVE ALL THESE ECHO'S.  I FIND THEM HELPFUL
 

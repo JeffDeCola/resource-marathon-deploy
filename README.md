@@ -1,12 +1,12 @@
-# resource-template
+# resource-marathon-deploy
 
-[![Code Climate](https://codeclimate.com/github/JeffDeCola/resource-template/badges/gpa.svg)](https://codeclimate.com/github/JeffDeCola/resource-template)
-[![Issue Count](https://codeclimate.com/github/JeffDeCola/resource-template/badges/issue_count.svg)](https://codeclimate.com/github/JeffDeCola/resource-template/issues)
-[![Go Report Card](https://goreportcard.com/badge/jeffdecola/resource-template)](https://goreportcard.com/report/jeffdecola/resource-template)
-[![GoDoc](https://godoc.org/github.com/JeffDeCola/resource-template?status.svg)](https://godoc.org/github.com/JeffDeCola/resource-template)
+[![Code Climate](https://codeclimate.com/github/JeffDeCola/resource-marathon-deploy/badges/gpa.svg)](https://codeclimate.com/github/JeffDeCola/resource-marathon-deploy)
+[![Issue Count](https://codeclimate.com/github/JeffDeCola/resource-marathon-deploy/badges/issue_count.svg)](https://codeclimate.com/github/JeffDeCola/resource-marathon-deploy/issues)
+[![Go Report Card](https://goreportcard.com/badge/jeffdecola/resource-marathon-deploy)](https://goreportcard.com/report/jeffdecola/resource-marathon-deploy)
+[![GoDoc](https://godoc.org/github.com/JeffDeCola/resource-marathon-deploy?status.svg)](https://godoc.org/github.com/JeffDeCola/resource-marathon-deploy)
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://jeffdecola.mit-license.org)
 
-`resource-template` _can be used as a template for developing a concourse ci resource type.
+`resource-marathon-deploy` _can be used as a template for developing a concourse ci resource type.
 Lots of comments, placeholders and extra code to make your own.
 It is tested, built and pushed to dockerhub using concourse ci._
 
@@ -161,7 +161,7 @@ jobs:
   - get: your-repo-names
     trigger: true
     ...
-  - put: resource-template
+  - put: resource-marathon-deploy
     params: { param1: "hello jeff", param2: "How are you?" }
 
 resource_types:
@@ -169,12 +169,12 @@ resource_types:
 - name: jeffs-resource
   type: docker-image
   source:
-   repository: jeffdecola/resource-template
+   repository: jeffdecola/resource-marathon-deploy
    tag: latest
 
 resources:
   ...
-- name: resource-template
+- name: resource-marathon-deploy
   type: jeffs-resource
   source:
     source1: foo1
@@ -185,10 +185,10 @@ GET would look similiar.
 
 ## TESTED, BUILT & PUSHED TO DOCKERHUB USING CONCOURSE CI
 
-To automate the creation of the `resource-template` docker image, a concourse ci pipeline
+To automate the creation of the `resource-marathon-deploy` docker image, a concourse ci pipeline
 will unit test, build and push the docker image to dockerhub.
 
-![IMAGE - resource-template concourse ci piepline - IMAGE](docs/resource-template-pipeline.jpg)
+![IMAGE - resource-marathon-deploy concourse ci piepline - IMAGE](docs/resource-marathon-deploy-pipeline.jpg)
 
 A _ci/.credentials.yml_ file needs to be created for your _slack_url_, _repo_github_token_,
 and _dockerhub_password_.
@@ -196,7 +196,7 @@ and _dockerhub_password_.
 Use fly to upload the the pipeline file _ci/pipline.yml_ to concourse:
 
 ```bash
-fly -t ci set-pipeline -p resource-template -c ci/pipeline.yml --load-vars-from ci/.credentials.yml
+fly -t ci set-pipeline -p resource-marathon-deploy -c ci/pipeline.yml --load-vars-from ci/.credentials.yml
 ```
 
 ## CONCOURSE RESOURCES IN PIPELINE
@@ -205,7 +205,7 @@ As seen in the pipeline diagram, the _resource-dump-to-dockerhub_ uses the resou
 [docker-image](https://github.com/concourse/docker-image-resource)
 to push a docker image to dockerhub.
 
-`resource-template` also contains a few extra concourse resources:
+`resource-marathon-deploy` also contains a few extra concourse resources:
 
 * A resource (_resource-slack-alert_) uses a [docker image](https://hub.docker.com/r/cfcommunity/slack-notification-resource)
   that will notify slack on your progress.
