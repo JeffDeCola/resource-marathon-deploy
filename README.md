@@ -6,25 +6,9 @@
 [![GoDoc](https://godoc.org/github.com/JeffDeCola/resource-marathon-deploy?status.svg)](https://godoc.org/github.com/JeffDeCola/resource-marathon-deploy)
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://jeffdecola.mit-license.org)
 
-`resource-marathon-deploy` _can be used as a template for developing a concourse ci resource type.
-Lots of comments, placeholders and extra code to make your own.
-It is tested, built and pushed to dockerhub using concourse ci._
+_Written in GO `resource-marathon-deploy` is used to ......_
 
-## USE EITHER BASH SCRIPT OR GO
-
-This resource type can use either bash script or go.
-
-Change _ci/Dockerfile_ to either ADD _/assets-go_ or _/assets-bash_.
-
-### USING BASH (default)
-
-The 3 bash script files located in _/assets-bash_.
-
-### USING GO
-
-The 3 bash scripts are located in _/assets-go_ that run _main.go_ with the second argument being
-_check_, _in_ or _out_ resepctively. Hence only one file _main.go_ need to be
-maintained, rather than three seperate files.
+This resource was built using ([_`resource-template`_](https://github.com/JeffDeCola/resource-template))
 
 ## SOURCE CONFIGURATION
 
