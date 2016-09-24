@@ -8,7 +8,7 @@
 
 _Written in GO `resource-marathon-deploy` is used to ......_
 
-This resource was built using ([_`resource-template`_](https://github.com/JeffDeCola/resource-template))
+This resource was built using [_`resource-template`_](https://github.com/JeffDeCola/resource-template).
 
 ## SOURCE CONFIGURATION
 
