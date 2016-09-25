@@ -103,21 +103,26 @@ _OUT will mimic updating a resource._
 
 #### Parameters
 
-* `param1`: Just a placeholder.
-
-* `param2`: Just a placeholder
+* `id`: Name of Job
+* `cpu`: Number of cpus.
+* `memory`: How much memory does the resource need.
 
 #### stdin
 
 ```json
 {
   "params": {
-    "param1": "Hello Jeff",
-    "param2": "How are you?"
+    "id": "(Name of job)",
+    "cpu": "(How many cpus)",
+    "memory": "(in megabtyes)"
   },
   "source": {
-    "source1": "sourcefoo1",
-    "source2": "sourcefoo2"
+    "marathonuri": "(http:/...)",
+    "repository": "(/username/image-name)",
+    "tag": "latest"
+  },
+  "versions": {
+    "ref": ""
   }
 }
 ```
@@ -146,24 +151,24 @@ jobs:
     trigger: true
     ...
   - put: resource-marathon-deploy
-    params: { param1: "hello jeff", param2: "How are you?" }
+    params: {id: "Name of Job", cpu: "0.1", memory: "16.0"}
 
 resource_types:
   ...
-- name: jeffs-resource
+- name: marathon-deploy
   type: docker-image
   source:
-   repository: jeffdecola/resource-marathon-deploy
-   tag: latest
+    marathonuri:http://10.141.141.10:808
+    repository: jeffdecola/resource-marathon-deploy
+    tag: latest
 
 resources:
   ...
 - name: resource-marathon-deploy
-  type: jeffs-resource
+  type: marathon-deploy
   source:
-    source1: foo1
-    source1: foo2
-```
+    repository: /username/image-name
+    tag: latest
 
 GET would look similiar.
 

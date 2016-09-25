@@ -3,31 +3,34 @@
 	"ignore": "test",
 	"package": [
 		{
-			"checksumSHA1": "vc/hhWE/vvM0dRt5TdH318DsX/8=",
-			"path": "github.com/ckaznocha/marathon-resource/marathonclient",
-			"revision": "f325cb705e6e229c4b814342818650327b0962c4",
-			"revisionTime": "2016-08-21T19:31:22Z"
+			"checksumSHA1": "MCTrLPpP8rZ7P7KLZCE4s0vnqCU=",
+			"path": "github.com/ckaznocha/marathon-resource/cmd/marathon-resource/dates",
+			"revision": "8a5a4ac3a21b5c95123b9e806e58ac6fb664b28b",
+			"revisionTime": "2016-09-25T18:18:46Z"
+		},
+		{
+			"checksumSHA1": "kUoKzIRfkJ0UuL5291otA2Yc/lY=",
+			"path": "github.com/ckaznocha/marathon-resource/cmd/marathon-resource/marathon",
+			"revision": "8a5a4ac3a21b5c95123b9e806e58ac6fb664b28b",
+			"revisionTime": "2016-09-25T18:18:46Z"
 		},
 		{
 			"checksumSHA1": "O/eUfUoi7lWgZiipUP939AAdKk4=",
-			"origin": "github.com/ckaznocha/marathon-resource/vendor/github.com/donovanhide/eventsource",
 			"path": "github.com/donovanhide/eventsource",
-			"revision": "f325cb705e6e229c4b814342818650327b0962c4",
-			"revisionTime": "2016-08-21T19:31:22Z"
+			"revision": "fd1de70867126402be23c306e1ce32828455d85b",
+			"revisionTime": "2016-05-25T20:46:10Z"
 		},
 		{
-			"checksumSHA1": "zm1zp81jlZhIpBZMic+BXztYOG4=",
-			"origin": "github.com/ckaznocha/marathon-resource/vendor/github.com/gambol99/go-marathon",
+			"checksumSHA1": "V2jH91oinIBWALKu9nKKy4ehXZk=",
 			"path": "github.com/gambol99/go-marathon",
-			"revision": "f325cb705e6e229c4b814342818650327b0962c4",
-			"revisionTime": "2016-08-21T19:31:22Z"
+			"revision": "27ea42affe2cc6dfb7c2831c24976dd94cea8436",
+			"revisionTime": "2016-09-23T15:21:40Z"
 		},
 		{
 			"checksumSHA1": "yyAzHoiVLu+xywYI2BDyRq6sOqE=",
-			"origin": "github.com/ckaznocha/marathon-resource/vendor/github.com/google/go-querystring/query",
 			"path": "github.com/google/go-querystring/query",
-			"revision": "f325cb705e6e229c4b814342818650327b0962c4",
-			"revisionTime": "2016-08-21T19:31:22Z"
+			"revision": "9235644dd9e52eeae6fa48efd539fdc351a0af53",
+			"revisionTime": "2016-03-11T01:20:12Z"
 		}
 	],
 	"rootPath": "github.com/JeffDeCola/resource-marathon-deploy"

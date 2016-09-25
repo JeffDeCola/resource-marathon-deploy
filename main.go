@@ -8,7 +8,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/JeffDeCola/resource-template/actions"
+	"github.com/JeffDeCola/resource-marathon-deploy/actions"
 )
 
 // dumpinput ...

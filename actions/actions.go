@@ -3,6 +3,7 @@
 package actions
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"io/ioutil"
@@ -10,8 +11,9 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"path/filepath"
 
-	"github.com/ckaznocha/marathon-resource/marathonclient"
+	"github.com/ckaznocha/marathon-resource/cmd/marathon-resource/marathon"
 	gomarathon "github.com/gambol99/go-marathon"
 )
 
@@ -162,27 +164,19 @@ func In(input InputJSON, logger *log.Logger) (inOutputJSON, error) {
 func Out(input InputJSON, logger *log.Logger) (outOutputJSON, error) {
 
 	// PARSE THE JSON FILE /tmp/input.json
-	source1, ok := input.Source["source1"]
+	marathonuri, ok := input.Source["marathonuri"]
 	if !ok {
-		return outOutputJSON{}, errors.New("source1 not set")
+		return outOutputJSON{}, errors.New("marathonuri not set")
 	}
-	source2, ok := input.Source["source2"]
+	appjsonpath, ok := input.Params["app_json_path"]
 	if !ok {
-		return outOutputJSON{}, errors.New("source2 not set")
-	}
-	param1, ok := input.Params["param1"]
-	if !ok {
-		return outOutputJSON{}, errors.New("param1 not set")
-	}
-	param2, ok := input.Params["param2"]
-	if !ok {
-		return outOutputJSON{}, errors.New("param2 not set")
+		return outOutputJSON{}, errors.New("appjsonpath not set")
 	}
 	var ref = input.Version.Ref
 	logger.Print("source are")
-	logger.Print(source1, source2)
+	logger.Print(marathonuri)
 	logger.Print("params are")
-	logger.Print(param1, param2)
+	logger.Print(appjsonpath)
 	logger.Print("ref is")
 	logger.Print(ref)
 
@@ -195,29 +189,29 @@ func Out(input InputJSON, logger *log.Logger) (outOutputJSON, error) {
 
 	// OUT (UPDATE THE RESOURCE) *************************************************************************
 
-	uri, err := url.Parse("http://10.141.141.10:8080")
+	jsondata, err := ioutil.ReadFile(filepath.Join(os.Args[2], appjsonpath))
+	if err != nil {
+		return outOutputJSON{}, err
+	}
+
+	logger.Print("The app.json file:")
+	logger.Print(string(jsondata))
+
+	var marathonAPP gomarathon.Application
+	if err := json.Unmarshal(jsondata, &marathonAPP); err != nil {
+		return outOutputJSON{}, err
+	}
+
+	uri, err := url.Parse(marathonuri)
 	logger.Print("uri is: ", uri)
 	if err != nil {
 		log.Fatal("Malformed URI", err)
 	}
 
-	apiclient := marathonclient.NewMarathoner(http.DefaultClient, uri)
+	apiclient := marathon.NewMarathoner(http.DefaultClient, uri, nil)
 
-	mem := 16.0
-	forcepull := true
+	did, err := apiclient.UpdateApp(marathonAPP)
 
-	did, err := apiclient.UpdateApp(gomarathon.Application{
-		ID:   "jeffisawesome5",
-		CPUs: 0.1,
-		Mem:  &mem,
-		Container: &gomarathon.Container{
-			Type: "DOCKER",
-			Docker: &gomarathon.Docker{
-				ForcePullImage: &forcepull,
-				Image:          "jeffdecola/hello-go",
-			},
-		},
-	})
 	if err != nil {
 		log.Fatal("Failed UpdateApp", err)
 	}
