@@ -36,7 +36,7 @@ echo ""
 # BECAUSE the resource type docker-image works in /dist.
 cp -R ./dist $GOPATH/.
 cp -R ./assets-go $GOPATH/dist/.
-cp -R ./assets-bash $GOPATH/dist/.
+#cp -R ./assets-bash $GOPATH/dist/.
 cp  ./bin/tree $GOPATH/dist/.
 
 cd $GOPATH
