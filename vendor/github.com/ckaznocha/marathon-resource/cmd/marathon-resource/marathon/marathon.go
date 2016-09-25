@@ -1,4 +1,4 @@
-package marathonclient
+package marathon
 
 import (
 	"bytes"
@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"net/url"
 
+	"github.com/ckaznocha/marathon-resource/cmd/marathon-resource/dates"
 	gomarathon "github.com/gambol99/go-marathon"
 )
 
@@ -36,10 +37,18 @@ type (
 	marathon struct {
 		client doer
 		url    *url.URL
+		auth   *AuthCreds
+	}
+
+	//AuthCreds will be used for HTTP basic auth
+	AuthCreds struct {
+		UserName string `json:"user_name"`
+		Password string `json:"password"`
 	}
 )
 
-func NewMarathoner(client doer, uri *url.URL) Marathoner {
+//NewMarathoner returns a new marathoner
+func NewMarathoner(client doer, uri *url.URL, auth *AuthCreds) Marathoner {
 	return &marathon{client: client, url: uri}
 }
 
@@ -47,7 +56,7 @@ func (m *marathon) handleReq(
 	method string,
 	path string,
 	payload io.Reader,
-	wantCode int,
+	wantCodes []int,
 	resObj interface{},
 ) error {
 	u := *m.url
@@ -57,15 +66,31 @@ func (m *marathon) handleReq(
 		return err
 	}
 	req.Header.Set("Content-type", jsonContentType)
+	if m.auth != nil {
+		req.SetBasicAuth(m.auth.UserName, m.auth.Password)
+	}
 	res, err := m.client.Do(req)
 	if err != nil {
 		return err
 	}
 	defer res.Body.Close()
 
-	if res.StatusCode != wantCode {
-		return fmt.Errorf("Expected %d response code but got %d", wantCode, res.StatusCode)
+	gotWantCode := false
+	for _, wantCode := range wantCodes {
+		if res.StatusCode == wantCode {
+			gotWantCode = true
+			break
+		}
 	}
+
+	if !gotWantCode {
+		return fmt.Errorf(
+			"Expected one of %v responses code but got %d",
+			wantCodes,
+			res.StatusCode,
+		)
+	}
+
 	if err = json.NewDecoder(res.Body).Decode(resObj); err != nil && err != io.EOF {
 		return err
 	}
@@ -78,12 +103,12 @@ func (m *marathon) LatestVersions(appID, version string) ([]string, error) {
 		http.MethodGet,
 		fmt.Sprintf(pathAppVersions, appID),
 		nil,
-		http.StatusOK,
+		[]int{http.StatusOK},
 		&v,
 	); err != nil {
 		return nil, err
 	}
-	return newerTimestamps(v.Versions, version)
+	return dates.NewerTimestamps(v.Versions, version)
 }
 
 func (m *marathon) GetApp(appID, version string) (gomarathon.Application, error) {
@@ -92,7 +117,7 @@ func (m *marathon) GetApp(appID, version string) (gomarathon.Application, error)
 		http.MethodGet,
 		fmt.Sprintf(pathAppAtVersion, appID, version),
 		nil,
-		http.StatusOK,
+		[]int{http.StatusOK},
 		&app,
 	)
 	return app, err
@@ -107,7 +132,7 @@ func (m *marathon) UpdateApp(inApp gomarathon.Application) (gomarathon.Deploymen
 		http.MethodPut,
 		fmt.Sprintf(pathApp, inApp.ID),
 		bytes.NewReader(payload),
-		http.StatusOK,
+		[]int{http.StatusOK, http.StatusCreated},
 		&deployment,
 	)
 	return deployment, err
@@ -121,13 +146,11 @@ func (m *marathon) CheckDeployment(deploymentID string) (bool, error) {
 		http.MethodGet,
 		pathDeployments,
 		nil,
-		http.StatusOK,
+		[]int{http.StatusOK},
 		&deployments,
 	)
-	fmt.Println(err)
 
 	for _, v := range deployments {
-		fmt.Println(v.ID)
 		if v.ID == deploymentID {
 			return true, nil
 		}
@@ -140,7 +163,7 @@ func (m *marathon) DeleteDeployment(deploymentID string) error {
 		http.MethodDelete,
 		fmt.Sprintf(pathDeployment, deploymentID),
 		nil,
-		http.StatusOK,
+		[]int{http.StatusOK},
 		nil,
 	)
 }

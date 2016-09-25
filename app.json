@@ -1,0 +1,17 @@
+{
+    "id": "jeffmonkey12",
+    "cpus": 0.4,
+    "mem": 16.0,
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            "forcePullImage": true,
+            "image": "jeffdecola/hello-go:latest",
+            "network": "BRIDGE",
+            "portMappings": [{
+                "containerPort": 8080,
+                "hostPort": 0
+            }]
+        }
+    }
+}
