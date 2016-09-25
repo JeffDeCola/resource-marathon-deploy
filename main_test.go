@@ -1,3 +1,5 @@
+// resource-marathon-deploy main_test.go
+
 package main
 
 import "testing"
