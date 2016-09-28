@@ -161,7 +161,7 @@ func In(input InputJSON, logger *log.Logger) (inOutputJSON, error) {
 
 }
 
-// Out ...
+// Out shall delploy an APP to marathon based on marathon.json file.
 func Out(input InputJSON, logger *log.Logger) (outOutputJSON, error) {
 
 	// PARSE THE JSON FILE /tmp/input.json
