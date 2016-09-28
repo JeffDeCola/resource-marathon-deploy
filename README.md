@@ -6,7 +6,9 @@
 [![GoDoc](https://godoc.org/github.com/JeffDeCola/resource-marathon-deploy?status.svg)](https://godoc.org/github.com/JeffDeCola/resource-marathon-deploy)
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://jeffdecola.mit-license.org)
 
-_Written in GO `resource-marathon-deploy` is used to ......_
+_Written in GO, `resource-marathon-deploy` was used as a test to help develop [`marathon-resource`](https://github.com/ckaznocha/marathon-resource)._
+
+It deploys an APP to marthon using a marathon .json file.
 
 This resource was built using [_`resource-template`_](https://github.com/JeffDeCola/resource-template).
 
@@ -14,9 +16,7 @@ This resource was built using [_`resource-template`_](https://github.com/JeffDeC
 
 These are just placeholders that you can update where your source is.
 
-* `source1`: Just a placeholder.
-
-* `source2`: Just a placeholder.
+* `marathonuri`: The uri of marathon.
 
 ## BEHAVIOR
 
@@ -99,27 +99,43 @@ The IN will mimic a fetch and place a fake file `fetched.json` file in the worki
 
 ### OUT (update a resouce)
 
-_OUT will mimic updating a resource._
+_OUT shall delploy an APP to marathon based on marathon.json file._
+
+Create a marathon .json file.  As an example:
+
+```json
+{
+    "id": "appname",
+    "cpus": 0.1,
+    "mem": 16.0,
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            "forcePullImage": true,
+            "image": "jeffdecola/hello-go:latest",
+            "network": "BRIDGE",
+            "portMappings": [{
+                "containerPort": 8080,
+                "hostPort": 0
+            }]
+        }
+    }
+}
+```
 
 #### Parameters
 
-* `id`: Name of Job
-* `cpu`: Number of cpus.
-* `memory`: How much memory does the resource need.
+* `app_json_path`: the path to your newly created marathon .json file.
 
 #### stdin
 
 ```json
 {
   "params": {
-    "id": "(Name of job)",
-    "cpu": "(How many cpus)",
-    "memory": "(in megabtyes)"
+    "app_json_path": "hello-go/app.json",
   },
   "source": {
-    "marathonuri": "(http:/...)",
-    "repository": "(/username/image-name)",
-    "tag": "latest"
+    "marathonuri": "http://10.141.141.10:808",
   },
   "versions": {
     "ref": ""
@@ -131,15 +147,12 @@ _OUT will mimic updating a resource._
 
 ```json
 {
-  "version":{ "ref": "123" },
+  "version":{ "ref": "(timestamp of when marathon started)" },
   "metadata": [
-    { "name": "nameofmonkey","value": "Henry" },
-    { "name": "author","value": "Jeff DeCola" }
+    { "name": "??????????????","value": "??????????????" },
   ]
 }
 ```
-
-where 123 is the version you wanted to update.
 
 ## PIPELINE EXAMPLE USING PUT
 
@@ -151,7 +164,7 @@ jobs:
     trigger: true
     ...
   - put: resource-marathon-deploy
-    params: {id: "Name of Job", cpu: "0.1", memory: "16.0"}
+    params: {app_json_path: "hello-go/app.json"}
 
 resource_types:
   ...
@@ -169,6 +182,7 @@ resources:
   source:
     repository: /username/image-name
     tag: latest
+```
 
 GET would look similiar.
 
