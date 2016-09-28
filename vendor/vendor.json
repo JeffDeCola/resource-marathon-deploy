@@ -5,14 +5,14 @@
 		{
 			"checksumSHA1": "MCTrLPpP8rZ7P7KLZCE4s0vnqCU=",
 			"path": "github.com/ckaznocha/marathon-resource/cmd/marathon-resource/dates",
-			"revision": "8a5a4ac3a21b5c95123b9e806e58ac6fb664b28b",
-			"revisionTime": "2016-09-25T18:18:46Z"
+			"revision": "1c01122f447fbed9d3b6936cc1ad8328b20a98a9",
+			"revisionTime": "2016-09-28T05:30:41Z"
 		},
 		{
-			"checksumSHA1": "kUoKzIRfkJ0UuL5291otA2Yc/lY=",
+			"checksumSHA1": "bo4X44k4vT4pHwmPFDwp9AGf7LA=",
 			"path": "github.com/ckaznocha/marathon-resource/cmd/marathon-resource/marathon",
-			"revision": "8a5a4ac3a21b5c95123b9e806e58ac6fb664b28b",
-			"revisionTime": "2016-09-25T18:18:46Z"
+			"revision": "1c01122f447fbed9d3b6936cc1ad8328b20a98a9",
+			"revisionTime": "2016-09-28T05:30:41Z"
 		},
 		{
 			"checksumSHA1": "O/eUfUoi7lWgZiipUP939AAdKk4=",
@@ -21,10 +21,10 @@
 			"revisionTime": "2016-05-25T20:46:10Z"
 		},
 		{
-			"checksumSHA1": "V2jH91oinIBWALKu9nKKy4ehXZk=",
+			"checksumSHA1": "DaXuCybdORUfQ409XZBz1owCzV0=",
 			"path": "github.com/gambol99/go-marathon",
-			"revision": "27ea42affe2cc6dfb7c2831c24976dd94cea8436",
-			"revisionTime": "2016-09-23T15:21:40Z"
+			"revision": "effb742c1b766a04648b5f905c4c1cd0c5600479",
+			"revisionTime": "2016-09-23T14:55:30Z"
 		},
 		{
 			"checksumSHA1": "yyAzHoiVLu+xywYI2BDyRq6sOqE=",
