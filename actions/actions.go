@@ -165,19 +165,19 @@ func In(input InputJSON, logger *log.Logger) (inOutputJSON, error) {
 func Out(input InputJSON, logger *log.Logger) (outOutputJSON, error) {
 
 	// PARSE THE JSON FILE /tmp/input.json
-	marathonuri, ok := input.Source["marathonuri"]
-	if !ok {
-		return outOutputJSON{}, errors.New("marathonuri not set")
-	}
 	appjsonpath, ok := input.Params["app_json_path"]
 	if !ok {
 		return outOutputJSON{}, errors.New("appjsonpath not set")
 	}
+	marathonuri, ok := input.Source["marathonuri"]
+	if !ok {
+		return outOutputJSON{}, errors.New("marathonuri not set")
+	}
 	var ref = input.Version.Ref
-	logger.Print("source are")
-	logger.Print(marathonuri)
 	logger.Print("params are")
 	logger.Print(appjsonpath)
+	logger.Print("source are")
+	logger.Print(marathonuri)
 	logger.Print("ref is")
 	logger.Print(ref)
 

@@ -8,13 +8,11 @@
 
 _Written in GO, `resource-marathon-deploy` was used as a test to help develop [`marathon-resource`](https://github.com/ckaznocha/marathon-resource)._
 
-It deploys an APP to marthon using a marathon .json file.
+`resource-marathon-deploy` deploys an APP to marthon using a marathon .json file.
 
 This resource was built using [_`resource-template`_](https://github.com/JeffDeCola/resource-template).
 
 ## SOURCE CONFIGURATION
-
-These are just placeholders that you can update where your source is.
 
 * `marathonuri`: The uri of marathon.
 
@@ -158,10 +156,9 @@ Create a marathon .json file.  As an example:
 
 ```yaml
 jobs:
+...
 - name: your-job-name
   plan:
-  - get: your-repo-names
-    trigger: true
     ...
   - put: resource-marathon-deploy
     params: {app_json_path: "hello-go/app.json"}
