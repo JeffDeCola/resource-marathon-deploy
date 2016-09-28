@@ -120,14 +120,16 @@ type Marathon interface {
 	// a list of current subscriptions
 	Subscriptions() (*Subscriptions, error)
 	// add a events listener
-	AddEventsListener(channel EventsChannel, filter int) error
+	AddEventsListener(filter int) (EventsChannel, error)
 	// remove a events listener
 	RemoveEventsListener(channel EventsChannel)
-	// remove our self from subscriptions
+	// Subscribe a callback URL
+	Subscribe(string) error
+	// Unsubscribe a callback URL
 	Unsubscribe(string) error
 
 	// --- QUEUE ---
-	// get marathon lanuch queue
+	// get marathon launch queue
 	Queue() (*Queue, error)
 	// resets task launch delay of the specific application
 	DeleteQueueDelay(appID string) error
@@ -157,6 +159,12 @@ var (
 	ErrTimeoutError = errors.New("the operation has timed out")
 )
 
+// EventsChannelContext holds contextual data for an EventsChannel.
+type EventsChannelContext struct {
+	filter int
+	done   chan struct{}
+}
+
 type marathonClient struct {
 	sync.RWMutex
 	// the configuration for the client
@@ -172,7 +180,7 @@ type marathonClient struct {
 	// the marathon cluster
 	cluster Cluster
 	// a map of service you wish to listen to
-	listeners map[EventsChannel]int
+	listeners map[EventsChannel]EventsChannelContext
 	// a custom logger for debug log messages
 	debugLog *log.Logger
 	// wait time between repetitive requests to the API during polling
@@ -199,7 +207,7 @@ func NewClient(config Config) (Marathon, error) {
 
 	return &marathonClient{
 		config:          config,
-		listeners:       make(map[EventsChannel]int, 0),
+		listeners:       make(map[EventsChannel]EventsChannelContext),
 		cluster:         cluster,
 		httpClient:      config.HTTPClient,
 		debugLog:        log.New(debugLogOutput, "", 0),

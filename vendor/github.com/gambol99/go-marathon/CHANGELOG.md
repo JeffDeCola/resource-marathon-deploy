@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.3.0] - 2016-09-28
+- [#201][PR201]: Subscribe method is now exposed on the client to allow subscription of callback URL's
+
+### Fixed
+- [#205][PR205]: Fix memory leak by signalling goroutine termination on event listener removal.
+
+### Changed
+- [#205][PR205]: Change AddEventsListener to return event channel instead of taking one.
+
 ## [0.2.0] - 2016-09-23
 ### Added
 - [#196][PR196]: Port definitions.
@@ -59,11 +68,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Initial SemVer release.
 
-[Unreleased]: https://github.com/gambol99/go-marathon/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/gambol99/go-marathon/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/gambol99/go-marathon/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/gambol99/go-marathon/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/gambol99/go-marathon/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/gambol99/go-marathon/compare/v0.0.1...v0.1.0
 
+[PR205]: https://github.com/gambol99/go-marathon/pull/205
 [PR202]: https://github.com/gambol99/go-marathon/pull/202
+[PR201]: https://github.com/gambol99/go-marathon/pull/201
 [PR196]: https://github.com/gambol99/go-marathon/pull/196
 [PR191]: https://github.com/gambol99/go-marathon/pull/191
