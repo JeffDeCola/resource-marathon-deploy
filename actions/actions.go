@@ -12,6 +12,7 @@ import (
 	"net/url"
 	"os"
 	"path/filepath"
+	"time"
 
 	"github.com/ckaznocha/marathon-resource/cmd/marathon-resource/marathon"
 	gomarathon "github.com/gambol99/go-marathon"
@@ -189,6 +190,7 @@ func Out(input InputJSON, logger *log.Logger) (outOutputJSON, error) {
 
 	// OUT (UPDATE THE RESOURCE) *************************************************************************
 
+	// Read the marathon app.json file
 	jsondata, err := ioutil.ReadFile(filepath.Join(os.Args[2], appjsonpath))
 	if err != nil {
 		return outOutputJSON{}, err
@@ -197,19 +199,23 @@ func Out(input InputJSON, logger *log.Logger) (outOutputJSON, error) {
 	logger.Print("The app.json file:")
 	logger.Print(string(jsondata))
 
+	// Place file in marathonAPP struct
 	var marathonAPP gomarathon.Application
 	if err := json.Unmarshal(jsondata, &marathonAPP); err != nil {
 		return outOutputJSON{}, err
 	}
 
+	// Get the uri
 	uri, err := url.Parse(marathonuri)
 	logger.Print("uri is: ", uri)
 	if err != nil {
 		log.Fatal("Malformed URI", err)
 	}
 
+	// Open Marathon (sends json to marathon over http API)
 	apiclient := marathon.NewMarathoner(http.DefaultClient, uri, nil)
 
+	// Deploy Marathon (sends json to marathon over http API)
 	did, err := apiclient.UpdateApp(marathonAPP)
 
 	if err != nil {
@@ -219,14 +225,42 @@ func Out(input InputJSON, logger *log.Logger) (outOutputJSON, error) {
 	logger.Print("did is: ", did)
 	fmt.Fprintln(os.Stderr, did)
 
+	timer1 := time.NewTimer(time.Second * 10)
+	deploying := true
+
+	// Check if APP was deployed.
+deployloop:
+	for {
+
+		select {
+		case <-timer1.C:
+			break deployloop
+		default:
+			var err error
+			deploying, err = apiclient.CheckDeployment(did.DeploymentID)
+			if err != nil {
+				logger.Fatal("Malformed URI", err)
+			}
+			if !deploying {
+				break deployloop
+			}
+		}
+		time.Sleep(1 * time.Second)
+	}
+	if deploying {
+		err := apiclient.DeleteDeployment(did.DeploymentID)
+		if err != nil {
+			logger.Fatal("Failed to cleanup deplyment", err)
+		}
+		logger.Fatal("Could not deply")
+	}
+
+	// METADATA
 	var monkeyname = "Henry"
-	// ???????????????????????????????????????????????????????????????????????
-	// ??????????????????????????????????????????????????????????????????????
-	ref = "123"
 
 	// OUTPUT **************************************************************************************
 	output := outOutputJSON{
-		Version: version{Ref: ref},
+		Version: version{Ref: did.Version},
 		Metadata: []metadata{
 			{Name: "nameofmonkey", Value: monkeyname},
 			{Name: "author", Value: "Jeff DeCola"},
