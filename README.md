@@ -6,14 +6,14 @@
 [![GoDoc](https://godoc.org/github.com/JeffDeCola/resource-marathon-deploy?status.svg)](https://godoc.org/github.com/JeffDeCola/resource-marathon-deploy)
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://jeffdecola.mit-license.org)
 
-_Written in GO, `resource-marathon-deploy` was used as a test to help develop [`marathon-resource`](https://github.com/ckaznocha/marathon-resource)._
-
 `resource-marathon-deploy` is a Concourse resource type that deploys an APP to Marathon
 using a .json file.
 
 [GitHub Webpage](https://jeffdecola.github.io/resource-marathon-deploy/)
 
 ## DEVELOPED
+
+_Written in GO, `resource-marathon-deploy` was used as a test to help develop [`marathon-resource`](https://github.com/ckaznocha/marathon-resource)._
 
 This resource was built using [_`resource-template`_](https://github.com/JeffDeCola/resource-template).
 
@@ -25,9 +25,9 @@ This resource was built using [_`resource-template`_](https://github.com/JeffDeC
 
 ### CHECK (a resource version(s))
 
-_CHECK will mimic getting the list of versions from a resource._
+CHECK will mimic getting the list of versions from a resource.
 
-#### stdin
+#### CHECK stdin
 
 ```json
 {
@@ -43,7 +43,7 @@ _CHECK will mimic getting the list of versions from a resource._
 
 123 is the current version.
 
-#### stdout
+#### CHECK stdout
 
 ```json
 [
@@ -59,15 +59,15 @@ The last number 456 will become the current ref version that will be used by IN.
 
 ### IN (fetch a resource)
 
-_IN will mimic fetching a resource and placing a file in the working directory._
+IN will mimic fetching a resource and placing a file in the working directory.
 
-#### Parameters
+#### IN Parameters
 
 * `param1`: Just a placeholder.
 
 * `param2`: Just a placeholder.
 
-#### stdin
+#### IN stdin
 
 ```json
 {
@@ -84,7 +84,7 @@ _IN will mimic fetching a resource and placing a file in the working directory._
   }
 ```
 
-#### stdout
+#### IN stdout
 
 ```json
 {
@@ -102,7 +102,7 @@ The IN will mimic a fetch and place a fake file `fetched.json` file in the worki
 
 ### OUT (update a resouce)
 
-_OUT shall delploy an APP to marathon based on marathon.json file._
+OUT shall delploy an APP to marathon based on marathon.json file.
 
 Create a marathon .json file.  As an example:
 
@@ -126,11 +126,11 @@ Create a marathon .json file.  As an example:
 }
 ```
 
-#### Parameters
+#### OUT Parameters
 
 * `app_json_path`: the path to your newly created marathon .json file.
 
-#### stdin
+#### OUT stdin
 
 ```json
 {
@@ -146,7 +146,7 @@ Create a marathon .json file.  As an example:
 }
 ```
 
-#### stdout
+#### OUT stdout
 
 ```json
 {
