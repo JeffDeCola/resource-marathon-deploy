@@ -11,7 +11,7 @@ _Written in GO, `resource-marathon-deploy` was used as a test to help develop [`
 `resource-marathon-deploy` is a Concourse resource type that deploys an APP to Marathon
 using a .json file.
 
-[GitHub Webpage](https://jeffdecola.github.io/resource-template/)
+[GitHub Webpage](https://jeffdecola.github.io/resource-marathon-deploy/)
 
 ## DEVELOPED
 
