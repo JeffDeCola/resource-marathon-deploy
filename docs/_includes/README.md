@@ -1,47 +1,185 @@
 
-## LONG-RUNNING APP FOR MARATHON
+## DEVELOPED
 
-Written in go, every 3 seconds `hello-go` will print:
+This resource was built using [_`resource-template`_](https://github.com/JeffDeCola/resource-template).
 
-```bash
-Hello everyone, count is: 1
-Hello everyone, count is: 2
-Hello everyone, count is: 3
+## SOURCE CONFIGURATION
+
+* `marathonuri`: The uri of marathon.
+
+## BEHAVIOR
+
+### CHECK (a resource version(s))
+
+_CHECK will mimic getting the list of versions from a resource._
+
+#### stdin
+
+```json
+{
+  "source": {
+    "source1": "sourcefoo1",
+    "source2": "sourcefoo2"
+  },
+  "version": {
+    "ref": "123 ",
+  }
+}
+```
+
+123 is the current version.
+
+#### stdout
+
+```json
+[
+  { "ref": "123" },
+  { "ref": "3de" },
+  { "ref": "456" }
+]
+```
+
+456 is the latest version that will be used.
+
+The last number 456 will become the current ref version that will be used by IN.
+
+### IN (fetch a resource)
+
+_IN will mimic fetching a resource and placing a file in the working directory._
+
+#### Parameters
+
+* `param1`: Just a placeholder.
+
+* `param2`: Just a placeholder.
+
+#### stdin
+
+```json
+{
+  "source": {
+    "source1": "sourcefoo1",
+    "source2": "sourcefoo2"
+  },
+  "params": {
+    "param1": "Hello Clif",
+    "param2": "Nice to meet you"
+  },
+  "version": {
+    "ref": "456",
+  }
+```
+
+#### stdout
+
+```json
+{
+  "version":{ "ref": "456" },
+  "metadata": [
+    { "name": "nameofmonkey", "value": "Larry" },
+    { "name": "author","value": "Jeff DeCola" }
+  ]
+}
+```
+
+#### file fetched (fetch.json)
+
+The IN will mimic a fetch and place a fake file `fetched.json` file in the working directory:
+
+### OUT (update a resouce)
+
+_OUT shall delploy an APP to marathon based on marathon.json file._
+
+Create a marathon .json file.  As an example:
+
+```json
+{
+    "id": "appname",
+    "cpus": 0.1,
+    "mem": 16.0,
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            "forcePullImage": true,
+            "image": "jeffdecola/hello-go:latest",
+            "network": "BRIDGE",
+            "portMappings": [{
+                "containerPort": 8080,
+                "hostPort": 0
+            }]
+        }
+    }
+}
+```
+
+#### Parameters
+
+* `app_json_path`: the path to your newly created marathon .json file.
+
+#### stdin
+
+```json
+{
+  "params": {
+    "app_json_path": "hello-go/app.json",
+  },
+  "source": {
+    "marathonuri": "http://10.141.141.10:808",
+  },
+  "versions": {
+    "ref": ""
+  }
+}
+```
+
+#### stdout
+
+```json
+{
+  "version":{ "ref": "(timestamp of when marathon started)" },
+  "metadata": [
+    { "name": "??????????????","value": "??????????????" },
+  ]
+}
+```
+
+## PIPELINE EXAMPLE USING PUT
+
+```yaml
+jobs:
 ...
+- name: your-job-name
+  plan:
+    ...
+  - put: resource-marathon-deploy
+    params: {app_json_path: "hello-go/app.json"}
+
+resource_types:
+  ...
+- name: marathon-deploy
+  type: docker-image
+  source:
+    marathonuri:http://10.141.141.10:808
+    repository: jeffdecola/resource-marathon-deploy
+    tag: latest
+
+resources:
+  ...
+- name: resource-marathon-deploy
+  type: marathon-deploy
+  source:
+    repository: /username/image-name
+    tag: latest
 ```
 
-`hello-go` shows how a simple "hello-world" program uses concourse ci to
-automate the creation and deployment of a docker image to marathon.
-
-The `hello-go` [docker image](https://hub.docker.com/r/jeffdecola/hello-go)
-is useful in marathon and mesos testing where a simple long running app is needed.
-
-## MARATHON .json FILE
-
-[_`resource-marathon-deploy`_](https://github.com/JeffDeCola/resource-marathon-deploy)
-uses a marathon .json file (app.json) to deploys the newly created docker image
-(APP) to marathon.
-
-## RUN
-
-### Run image from dockerhub
-
-```bash
-docker run jeffdeCola/hello-go
-```
-
-### From the command line
-
-```bash
-go run main.go
-```
+GET would look similiar.
 
 ## TESTED, BUILT & PUSHED TO DOCKERHUB USING CONCOURSE CI
 
-To automate the creation of the `hello-go` docker image, a concourse ci pipeline
+To automate the creation of the `resource-marathon-deploy` docker image, a concourse ci pipeline
 will unit test, build and push the docker image to dockerhub.
 
-![IMAGE - hello-go concourse ci piepline - IMAGE](pics/hello-go-pipeline.jpg)
+![IMAGE - resource-marathon-deploy concourse ci piepline - IMAGE](pics/resource-marathon-deploy-pipeline.jpg)
 
 A _ci/.credentials.yml_ file needs to be created for your _slack_url_, _repo_github_token_,
 and _dockerhub_password_.
@@ -49,27 +187,20 @@ and _dockerhub_password_.
 Use fly to upload the the pipeline file _ci/pipline.yml_ to concourse:
 
 ```bash
-fly -t ci set-pipeline -p hello-go -c ci/pipeline.yml --load-vars-from ci/.credentials.yml
+fly -t ci set-pipeline -p resource-marathon-deploy -c ci/pipeline.yml --load-vars-from ci/.credentials.yml
 ```
 
 ## CONCOURSE RESOURCES IN PIPELINE
 
-As seen in the pipeline diagram, the _resource-dump-to-dockerhub_
-uses the resource type
+As seen in the pipeline diagram, the _resource-dump-to-dockerhub_ uses the resource type
 [docker-image](https://github.com/concourse/docker-image-resource)
 to push a docker image to dockerhub.
 
-[_`resource-marathon-deploy`_](https://github.com/JeffDeCola/resource-marathon-deploy)
-deploys the newly created docker image to marathon.
-
-`hello-go` also contains a few extra concourse resources:
+`resource-marathon-deploy` also contains a few extra concourse resources:
 
 * A resource (_resource-slack-alert_) uses a [docker image](https://hub.docker.com/r/cfcommunity/slack-notification-resource)
   that will notify slack on your progress.
 * A resource (_resource-repo-status_) use a [docker image](https://hub.docker.com/r/dpb587/github-status-resource)
   that will update your git status for that particular commit.
-* A resource ([_`resource-template`_](https://github.com/JeffDeCola/resource-template))
-  that can be used as a starting point and template for creating other concourse
-  ci resources.
 
-The above resources can be easily removed from the pipeline.
+These resources can be easily removed from the pipeline.
