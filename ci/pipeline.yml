@@ -1,6 +1,17 @@
 # resource-marathon-deploy pipeline 
 
 jobs:
+
+- name: job-readme-github-pages
+  plan:
+  - get: resource-marathon-deploy
+    trigger: true
+  - task: task-readme-github-pages
+    file: resource-marathon-deploy/ci/tasks/task-readme-github-pages.yml
+  - put: resource-marathon-deploy
+    params:
+      repository: resource-marathon-deploy-updated
+
 - name: job-unit-tests
   plan:
   - get: resource-marathon-deploy
@@ -63,6 +74,7 @@ jobs:
           params: { state: "failure", description: "FAILED job-build in concourse ci.", commit: "resource-marathon-deploy" }
 
 resource_types:
+
 - name: slack-notification
   type: docker-image
   source:
@@ -75,11 +87,14 @@ resource_types:
     tag: master
 
 resources:
+
 - name: resource-marathon-deploy                                                                                                                                                                         
   type: git                                                                                                                                                                                       
-  source:                                                                                                                                                                                         
-    branch: master                                                                                                                                                                                
-    uri: https://github.com/jeffdecola/resource-marathon-deploy 
+  source:
+    #uri: https://github.com/jeffdecola/resource-marathon-deploy
+    uri: git@github.com:jeffdecola/resource-marathon-deploy.git
+    branch: master
+    private_key: {{git_private_key}}                                                                                                                                                                                         
 - name: resource-dump-to-dockerhub
   type: docker-image
   source:

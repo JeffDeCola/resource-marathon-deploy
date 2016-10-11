@@ -8,7 +8,12 @@
 
 _Written in GO, `resource-marathon-deploy` was used as a test to help develop [`marathon-resource`](https://github.com/ckaznocha/marathon-resource)._
 
-`resource-marathon-deploy` deploys an APP to marthon using a marathon .json file.
+`resource-marathon-deploy` is a Concourse resource type that deploys an APP to Marathon
+using a .json file.
+
+[GitHub Webpage](https://jeffdecola.github.io/resource-template/)
+
+## DEVELOPED
 
 This resource was built using [_`resource-template`_](https://github.com/JeffDeCola/resource-template).
 
@@ -188,7 +193,7 @@ GET would look similiar.
 To automate the creation of the `resource-marathon-deploy` docker image, a concourse ci pipeline
 will unit test, build and push the docker image to dockerhub.
 
-![IMAGE - resource-marathon-deploy concourse ci piepline - IMAGE](docs/resource-marathon-deploy-pipeline.jpg)
+![IMAGE - resource-marathon-deploy concourse ci piepline - IMAGE](docs/pics/resource-marathon-deploy-pipeline.jpg)
 
 A _ci/.credentials.yml_ file needs to be created for your _slack_url_, _repo_github_token_,
 and _dockerhub_password_.
