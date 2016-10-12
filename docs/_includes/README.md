@@ -1,3 +1,4 @@
+[Docker Image](https://hub.docker.com/r/jeffdecola/resource-marathon-deploy)
 
 ## DEVELOPED
 
