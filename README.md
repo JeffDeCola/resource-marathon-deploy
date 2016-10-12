@@ -9,7 +9,8 @@
 `resource-marathon-deploy` is a Concourse resource type that deploys an APP to Marathon
 using a .json file.
 
-[GitHub Webpage](https://jeffdecola.github.io/resource-marathon-deploy/)
+[GitHub Webpage](https://jeffdecola.github.io/resource-marathon-deploy/),
+[Docker Image](https://hub.docker.com/r/jeffdecola/resource-marathon-deploy)
 
 ## DEVELOPED
 
