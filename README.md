@@ -58,6 +58,16 @@ CHECK will mimic getting the list of versions from a resource.
 
 The last number 456 will become the current ref version that will be used by IN.
 
+#### CHECK - go run
+
+```bash
+echo '{
+"params": {"param1": "Hello Clif","param2": "Nice to meet you"},
+"source": {"source1": "sourcefoo1","source2": "sourcefoo2"},
+"version":{"ref": "123"}}' |
+go run main.go check $PWD
+```
+
 ### IN (fetch a resource)
 
 IN will mimic fetching a resource and placing a file in the working directory.
@@ -97,9 +107,19 @@ IN will mimic fetching a resource and placing a file in the working directory.
 }
 ```
 
-#### file fetched (fetch.json)
+#### IN file fetched (fetch.json)
 
 The IN will mimic a fetch and place a fake file `fetched.json` file in the working directory:
+
+#### IN - go run
+
+```bash
+echo '{
+"params": {"param1": "Hello Clif","param2": "Nice to meet you"},
+"source": {"source1": "sourcefoo1","source2": "sourcefoo2"},
+"version":{"ref": "777"}}' |
+go run main.go in $PWD
+```
 
 ### OUT (update a resouce)
 
@@ -158,6 +178,16 @@ Create a marathon .json file.  As an example:
 }
 ```
 
+#### OUT - go run
+
+```bash
+echo '{
+"params": {"param1": "Hello Jeff","param2": "How are you?"},
+"source": {"source1": "sourcefoo1","source2": "sourcefoo2"},
+"version":{"ref": ""}}' |
+go run main.go out $PWD
+```
+
 ## PIPELINE EXAMPLE USING PUT
 
 ```yaml
@@ -174,7 +204,7 @@ resource_types:
 - name: marathon-deploy
   type: docker-image
   source:
-    marathonuri:http://10.141.141.10:808
+    marathonuri:http://10.141.141.10:8080
     repository: jeffdecola/resource-marathon-deploy
     tag: latest
 
