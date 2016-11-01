@@ -8,7 +8,8 @@
 
 _Written in GO, `resource-marathon-deploy` was used as a test to help develop [`marathon-resource`](https://github.com/ckaznocha/marathon-resource)._
 
-`resource-marathon-deploy` deploys an APP to marthon using a marathon .json file.
+`resource-marathon-deploy` is a Concourse resource type that deploys an APP to Marathon
+using a .json file.
 
 This resource was built using [_`resource-template`_](https://github.com/JeffDeCola/resource-template).
 
