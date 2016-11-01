@@ -6,8 +6,8 @@
 [![GoDoc](https://godoc.org/github.com/JeffDeCola/resource-marathon-deploy?status.svg)](https://godoc.org/github.com/JeffDeCola/resource-marathon-deploy)
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://jeffdecola.mit-license.org)
 
-`resource-marathon-deploy` is a Concourse resource type that deploys an APP to Marathon
-using a .json file.
+`resource-marathon-deploy` is a Concourse resource type that deploys an APP to
+Marathon using a .json file.
 
 [GitHub Webpage](https://jeffdecola.github.io/resource-marathon-deploy/),
 [Docker Image](https://hub.docker.com/r/jeffdecola/resource-marathon-deploy)
