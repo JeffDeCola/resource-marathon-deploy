@@ -1,21 +1,8 @@
-# resource-marathon-deploy
-
-[![Code Climate](https://codeclimate.com/github/JeffDeCola/resource-marathon-deploy/badges/gpa.svg)](https://codeclimate.com/github/JeffDeCola/resource-marathon-deploy)
-[![Issue Count](https://codeclimate.com/github/JeffDeCola/resource-marathon-deploy/badges/issue_count.svg)](https://codeclimate.com/github/JeffDeCola/resource-marathon-deploy/issues)
-[![Go Report Card](https://goreportcard.com/badge/jeffdecola/resource-marathon-deploy)](https://goreportcard.com/report/jeffdecola/resource-marathon-deploy)
-[![GoDoc](https://godoc.org/github.com/JeffDeCola/resource-marathon-deploy?status.svg)](https://godoc.org/github.com/JeffDeCola/resource-marathon-deploy)
-[![License](http://img.shields.io/:license-mit-blue.svg)](http://jeffdecola.mit-license.org)
-
-`resource-marathon-deploy` is a Concourse resource type that deploys an APP to Marathon
-using a .json file.
-
-[GitHub Webpage](https://jeffdecola.github.io/resource-marathon-deploy/),
 [Docker Image](https://hub.docker.com/r/jeffdecola/resource-marathon-deploy)
 
 ## DEVELOPED
 
 Written in GO, `resource-marathon-deploy` was used as a test to help develop [`marathon-resource`](https://github.com/ckaznocha/marathon-resource).
->>>>>>> 496a92bb5d23a6d9722fadcff9816a19673dbbab
 
 This resource was built using [_`resource-template`_](https://github.com/JeffDeCola/resource-template).
 
@@ -225,7 +212,7 @@ GET would look similiar.
 To automate the creation of the `resource-marathon-deploy` docker image, a concourse ci pipeline
 will unit test, build and push the docker image to dockerhub.
 
-![IMAGE - resource-marathon-deploy concourse ci piepline - IMAGE](docs/pics/resource-marathon-deploy-pipeline.jpg)
+![IMAGE - resource-marathon-deploy concourse ci piepline - IMAGE](pics/resource-marathon-deploy-pipeline.jpg)
 
 A _ci/.credentials.yml_ file needs to be created for your _slack_url_, _repo_github_token_,
 and _dockerhub_password_.
