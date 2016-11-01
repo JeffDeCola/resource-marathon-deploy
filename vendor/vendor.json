@@ -1,6 +1,37 @@
 {
 	"comment": "",
 	"ignore": "test",
-	"package": [],
-	"rootPath": "github.com/JeffDeCola/resource-template"
+	"package": [
+		{
+			"checksumSHA1": "MCTrLPpP8rZ7P7KLZCE4s0vnqCU=",
+			"path": "github.com/ckaznocha/marathon-resource/cmd/marathon-resource/dates",
+			"revision": "97ee524b460b3c033400523f61b40c635ff19788",
+			"revisionTime": "2016-09-28T06:03:04Z"
+		},
+		{
+			"checksumSHA1": "bH7kYTSFP+VQ/i+dc/zRWjvRfVE=",
+			"path": "github.com/ckaznocha/marathon-resource/cmd/marathon-resource/marathon",
+			"revision": "97ee524b460b3c033400523f61b40c635ff19788",
+			"revisionTime": "2016-09-28T06:03:04Z"
+		},
+		{
+			"checksumSHA1": "O/eUfUoi7lWgZiipUP939AAdKk4=",
+			"path": "github.com/donovanhide/eventsource",
+			"revision": "fd1de70867126402be23c306e1ce32828455d85b",
+			"revisionTime": "2016-05-25T20:46:10Z"
+		},
+		{
+			"checksumSHA1": "DaXuCybdORUfQ409XZBz1owCzV0=",
+			"path": "github.com/gambol99/go-marathon",
+			"revision": "effb742c1b766a04648b5f905c4c1cd0c5600479",
+			"revisionTime": "2016-09-23T14:55:30Z"
+		},
+		{
+			"checksumSHA1": "yyAzHoiVLu+xywYI2BDyRq6sOqE=",
+			"path": "github.com/google/go-querystring/query",
+			"revision": "9235644dd9e52eeae6fa48efd539fdc351a0af53",
+			"revisionTime": "2016-03-11T01:20:12Z"
+		}
+	],
+	"rootPath": "github.com/JeffDeCola/resource-marathon-deploy"
 }

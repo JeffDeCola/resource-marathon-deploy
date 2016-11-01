@@ -1,10 +1,10 @@
-# resource-template Dockerfile used to build docker image on concourse ci
+# resource-marathon-deploy Dockerfile used to build docker image on concourse ci
 
 FROM concourse/buildroot:base
 
 # Put the binary into the container
 # This is need with go only
-COPY resource-template /
+COPY resource-marathon-deploy /
 
 # Add tree - Not needed but illustrates how to add a command to build
 COPY tree /bin

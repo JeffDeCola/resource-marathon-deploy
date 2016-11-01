@@ -7,10 +7,10 @@ image_resource:
     tag: 1.7.1
 
 inputs:
-- name: resource-template
+- name: resource-marathon-deploy
 
 outputs:
 - name: dist
 
 run:
-  path: ./resource-template/ci/scripts/build.sh
+  path: ./resource-marathon-deploy/ci/scripts/build.sh
