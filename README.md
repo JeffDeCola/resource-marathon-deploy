@@ -15,7 +15,6 @@ Marathon using a .json file.
 ## DEVELOPED
 
 Written in GO, `resource-marathon-deploy` was used as a test to help develop [`marathon-resource`](https://github.com/ckaznocha/marathon-resource).
->>>>>>> 496a92bb5d23a6d9722fadcff9816a19673dbbab
 
 This resource was built using [_`resource-template`_](https://github.com/JeffDeCola/resource-template).
 
