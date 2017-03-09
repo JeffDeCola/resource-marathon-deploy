@@ -109,7 +109,8 @@ IN will mimic fetching a resource and placing a file in the working directory.
 
 #### IN file fetched (fetch.json)
 
-The IN will mimic a fetch and place a fake file `fetched.json` file in the working directory:
+The IN will mimic a fetch and place a fake file `fetched.json`
+file in the working directory:
 
 #### IN - go run
 
@@ -221,8 +222,8 @@ GET would look similiar.
 
 ## TESTED, BUILT & PUSHED TO DOCKERHUB USING CONCOURSE CI
 
-To automate the creation of the `resource-marathon-deploy` docker image, a concourse ci pipeline
-will unit test, build and push the docker image to dockerhub.
+To automate the creation of the `resource-marathon-deploy` docker image,
+a concourse ci pipeline will unit test, build and push the docker image to dockerhub.
 
 ![IMAGE - resource-marathon-deploy concourse ci piepline - IMAGE](docs/pics/resource-marathon-deploy-pipeline.jpg)
 
@@ -237,7 +238,8 @@ fly -t ci set-pipeline -p resource-marathon-deploy -c ci/pipeline.yml --load-var
 
 ## CONCOURSE RESOURCES IN PIPELINE
 
-As seen in the pipeline diagram, the _resource-dump-to-dockerhub_ uses the resource type
+As seen in the pipeline diagram, the _resource-dump-to-dockerhub_
+uses the resource type
 [docker-image](https://github.com/concourse/docker-image-resource)
 to push a docker image to dockerhub.
 
