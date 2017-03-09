@@ -81,7 +81,7 @@ func Check(input InputJSON, logger *log.Logger) (checkOutputJSON, error) {
 
 }
 
-// IN will fetch something and place in the working directory.
+// In will fetch something and place in the working directory.
 func In(input InputJSON, logger *log.Logger) (inOutputJSON, error) {
 
 	// PARSE THE JSON FILE /tmp/input.json
