@@ -9,8 +9,9 @@
 `resource-marathon-deploy` is a Concourse resource type that deploys an APP to
 Marathon using a .json file.
 
-[GitHub Webpage](https://jeffdecola.github.io/resource-marathon-deploy/),
-[Docker Image](https://hub.docker.com/r/jeffdecola/resource-marathon-deploy)
+[resource-marathon-deploy Docker Image](https://hub.docker.com/r/jeffdecola/resource-marathon-deploy) on DockerHub.
+
+[resource-marathon-deploy GitHub Webpage](https://jeffdecola.github.io/resource-marathon-deploy/)
 
 ## DEVELOPED
 
@@ -218,28 +219,21 @@ resources:
     tag: latest
 ```
 
-GET would look similiar.
+GET would look similar.
 
-## TESTED, BUILT & PUSHED TO DOCKERHUB USING CONCOURSE CI
+## TESTED, BUILT & PUSHED TO DOCKERHUB USING CONCOURSE
 
-To automate the creation of the `resource-marathon-deploy` docker image,
-a concourse ci pipeline will unit test, build and push the docker image to dockerhub.
+To automate the creation of the `resource-marathon-deploy` docker image, a concourse pipeline
+will,
 
-![IMAGE - resource-marathon-deploy concourse ci piepline - IMAGE](docs/pics/resource-marathon-deploy-pipeline.jpg)
+* Update README.md for resource-marathon-deploy github webpage.
+* Unit Test the code.
+* Build the docker image `resource-marathon-deploy` and push to DockerHub.
 
-A _ci/.credentials.yml_ file needs to be created for your _slack_url_, _repo_github_token_,
-and _dockerhub_password_.
+![IMAGE - resource-marathon-deploy concourse ci pipeline - IMAGE](docs/pics/resource-marathon-deploy-pipeline.jpg)
 
-Use fly to upload the the pipeline file _ci/pipline.yml_ to concourse:
-
-```bash
-fly -t ci set-pipeline -p resource-marathon-deploy -c ci/pipeline.yml --load-vars-from ci/.credentials.yml
-```
-
-## CONCOURSE RESOURCES IN PIPELINE
-
-As seen in the pipeline diagram, the _resource-dump-to-dockerhub_
-uses the resource type
+As seen in the pipeline diagram, the _resource-dump-to-dockerhub_ uses
+the resource type
 [docker-image](https://github.com/concourse/docker-image-resource)
 to push a docker image to dockerhub.
 
@@ -249,5 +243,9 @@ to push a docker image to dockerhub.
   that will notify slack on your progress.
 * A resource (_resource-repo-status_) use a [docker image](https://hub.docker.com/r/dpb587/github-status-resource)
   that will update your git status for that particular commit.
+* A resource ([_`resource-template`_](https://github.com/JeffDeCola/resource-template))
+  that can be used as a starting point and template for creating other concourse
+  ci resources.
 
-These resources can be easily removed from the pipeline.
+For more information on using concourse for continuous integration,
+refer to my cheat sheet on [concourse](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/operations-tools/continuous-integration-continuous-deployment/concourse-cheat-sheet).
