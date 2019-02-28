@@ -1,15 +1,16 @@
 # resource-marathon-deploy
 
-[![Code Climate](https://codeclimate.com/github/JeffDeCola/resource-marathon-deploy/badges/gpa.svg)](https://codeclimate.com/github/JeffDeCola/resource-marathon-deploy)
-[![Issue Count](https://codeclimate.com/github/JeffDeCola/resource-marathon-deploy/badges/issue_count.svg)](https://codeclimate.com/github/JeffDeCola/resource-marathon-deploy/issues)
-[![Go Report Card](https://goreportcard.com/badge/jeffdecola/resource-marathon-deploy)](https://goreportcard.com/report/jeffdecola/resource-marathon-deploy)
+[![Go Report Card](https://goreportcard.com/badge/github.com/JeffDeCola/resource-marathon-deploy)](https://goreportcard.com/report/github.com/JeffDeCola/resource-marathon-deploy)
 [![GoDoc](https://godoc.org/github.com/JeffDeCola/resource-marathon-deploy?status.svg)](https://godoc.org/github.com/JeffDeCola/resource-marathon-deploy)
+[![Maintainability](https://api.codeclimate.com/v1/badges/ed7ccb9bd7f39ccbfe23/maintainability)](https://codeclimate.com/github/JeffDeCola/resource-marathon-deploy/maintainability)
+[![Issue Count](https://codeclimate.com/github/JeffDeCola/resource-marathon-deploy/badges/issue_count.svg)](https://codeclimate.com/github/JeffDeCola/resource-marathon-deploy/issues)
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://jeffdecola.mit-license.org)
 
 `resource-marathon-deploy` is a Concourse resource type that deploys an APP to
 Marathon using a .json file.
 
-[resource-marathon-deploy Docker Image](https://hub.docker.com/r/jeffdecola/resource-marathon-deploy) on DockerHub.
+[resource-marathon-deploy Docker Image](https://hub.docker.com/r/jeffdecola/resource-marathon-deploy)
+on DockerHub.
 
 [resource-marathon-deploy GitHub Webpage](https://jeffdecola.github.io/resource-marathon-deploy/)
 
