@@ -1,4 +1,4 @@
 #!/bin/bash
-# resource-marathon-destroy destroy-pipeline.sh
+# resource-marathon-deploy destroy-pipeline.sh
 
-fly -t ci destroy-pipeline --pipeline resource-marathon-destroy
+fly -t ci destroy-pipeline --pipeline resource-marathon-deploy
