@@ -7,5 +7,3 @@ summary: A Concourse resource type that deploys an APP to Marathon using a .json
 ---
 
 {% include README.md %}
-
-
